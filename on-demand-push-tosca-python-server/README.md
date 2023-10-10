@@ -6,7 +6,7 @@ This example implementation is used to show the basic functionality of the imple
 
 ## Prerequisites
 
-For the easiest set-up, docker should be available and running. Additionally, both npm and maven are necessary to build and run applications.
+For the easiest set-up, docker should be available and running. Additionally, both npm (tested with [9.5.1](https://www.npmjs.com/package/npm/v/9.5.1)) and maven are necessary to build and run applications.
 Both Winery and OpenTOSCA need to be set-up and running. Tested with a set-up based on the [opentosca-docker repository](https://github.com/OpenTOSCA/opentosca-docker). Make sure no conflicts with ports arise and that the port 10123 is forwarded by the dind container.
 Next, pull the [feature 2 branch of the camunda-deployment-view-plugin repository](https://github.com/SeQuenC-Consortium/camunda-deployment-view-plugin/tree/feature/2-visualize-deployment-model) and set up the plugin according to the README.
 Similarly, pull the [dev-main branch of the workflow-modeler repository](https://github.com/SeQuenC-Consortium/workflow-modeler/tree/dev-main) and execute it according to the given README. Configure the endpoints according to your Winery, OpenTOSCA and Camunda setup. Make sure to avoid using localhost, as it causes issues with docker setups.
