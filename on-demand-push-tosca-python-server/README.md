@@ -6,16 +6,32 @@ This example implementation is used to show the basic functionality of the imple
 
 ## Prerequisites
 
-For the easiest set-up, docker should be available and running. Additionally, both npm (tested with [9.5.1](https://www.npmjs.com/package/npm/v/9.5.1)) and maven (tested with version 3.6.1) are necessary to build and run applications.
+For the easiest set-up, docker should be available and running. Additionally, both npm (tested with [9.5.1](https://www.npmjs.com/package/npm/v/9.5.1)) and maven (tested with version 3.6.1 and JDK 19) are necessary to build and run applications.
 Both Winery and OpenTOSCA need to be set up and running. Tested with a set-up based on the [opentosca-docker repository](https://github.com/OpenTOSCA/opentosca-docker). Make sure no conflicts with ports arise and that port 10123 is forwarded by the dind container.
+
+These changes have to be made to the docker-compose.yml of the opentosca-docker when compared to the current main branch (11.10.23) (port allocations were tested on a Windows Machine):
+  * Winery: Under winery, change ports from '8080:8080' to '8079:8080'
+  * UI: Change WINERY_PORT to 8079
+  * DIND: Add 10123:10123 to the list of forwarded ports
+
 Next, pull the [feature 2 branch of the camunda-deployment-view-plugin repository](https://github.com/SeQuenC-Consortium/camunda-deployment-view-plugin/tree/feature/2-visualize-deployment-model) and set up the plugin according to the README.
+
+To avoid port conflicts, launch Camunda on a different port (tested on 8078) by adding the following lines to the default.yml:
+
+```
+server:
+  port: 8078
+```
+
 Similarly, pull the [dev-main branch of the workflow-modeler repository](https://github.com/SeQuenC-Consortium/workflow-modeler/tree/dev-main) and execute it according to the given README. Configure the endpoints according to your Winery, OpenTOSCA, and Camunda setup. Make sure to avoid using localhost, as it causes issues with docker setups.
 
-These port allocations were tested on a Windows Machine:
-These changes have to be made to the docker-compose.yml of the opentosca-docker when compared to the current main branch (11.10.23)
-  * General: Change Ports from '8081-8087:8081-8087' to '8082-8087:8082-8087'
-  * Winery: under winery, change ports from '8080:8080' to '8081:8080'
-  * UI: Change WINERY_PORT to 8081
+In the case you followed our setup, this would mean the following (Replace ${PUBLIC_HOSTNAME}):
+
+  * Winery: Change IP and Port to ${PUBLIC_HOSTNAME}:8079
+  * Camunda: Change IP and Port to ${PUBLIC_HOSTNAME}:8078
+  * OpenTOSCA: Change Port to ${PUBLIC_HOSTNAME}
+
+
   
 ## Set-Up
 
