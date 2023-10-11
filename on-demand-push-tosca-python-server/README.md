@@ -11,6 +11,12 @@ Both Winery and OpenTOSCA need to be set up and running. Tested with a set-up ba
 Next, pull the [feature 2 branch of the camunda-deployment-view-plugin repository](https://github.com/SeQuenC-Consortium/camunda-deployment-view-plugin/tree/feature/2-visualize-deployment-model) and set up the plugin according to the README.
 Similarly, pull the [dev-main branch of the workflow-modeler repository](https://github.com/SeQuenC-Consortium/workflow-modeler/tree/dev-main) and execute it according to the given README. Configure the endpoints according to your Winery, OpenTOSCA, and Camunda setup. Make sure to avoid using localhost, as it causes issues with docker setups.
 
+These port allocations were tested on a Windows Machine:
+These changes have to be made to the docker-compose.yml of the opentosca-docker when compared to the current main branch (11.10.23)
+  * General: Change Ports from '8081-8087:8081-8087' to '8082-8087:8082-8087'
+  * Winery: under winery, change ports from '8080:8080' to '8081:8080'
+  * UI: Change WINERY_PORT to 8081
+  
 ## Set-Up
 
 ### Winery
