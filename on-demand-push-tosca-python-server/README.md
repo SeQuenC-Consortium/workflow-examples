@@ -54,7 +54,7 @@ Next, inside the workflow-modeler, configure the endpoints according to your Win
 
 In the case you followed our setup, this would mean the following (Replace ${PUBLIC_HOSTNAME} using your ip determined when setting up opentosca-docker, or host.docker.internal, depending on your setup):
 
-  * Winery: Change IP and Port to ${PUBLIC_HOSTNAME}:8079
+  * Winery: Change IP and Port to ${PUBLIC_HOSTNAME}:8079 (Port change only necessary in manual setup)
   * Camunda: Change IP and Port to ${PUBLIC_HOSTNAME}:8078
   * OpenTOSCA: Change Port to ${PUBLIC_HOSTNAME}
 
