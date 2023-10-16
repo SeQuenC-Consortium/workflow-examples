@@ -6,7 +6,9 @@ This example implementation is used to show the basic functionality of the imple
 
 ## Prerequisites
 
-For the easiest set-up, docker should be available and running. Additionally, both npm (tested with [9.5.1](https://www.npmjs.com/package/npm/v/9.5.1)) and maven (tested with version 3.6.1 and JDK 19) are necessary to build and run applications.
+### Manually
+
+For the set-up, docker should be available and running. Additionally, both npm (tested with [9.5.1](https://www.npmjs.com/package/npm/v/9.5.1)) and maven (tested with version 3.6.1 and JDK 19) are necessary to build and run applications.
 Both Winery and OpenTOSCA need to be set up and running. Tested with a set-up based on the [opentosca-docker repository](https://github.com/OpenTOSCA/opentosca-docker).
 Make sure no conflicts with ports arise and that port 10123 is forwarded by the dind container. A pre-adjusted docker-compose is available on the [demo/view-plugin branch](https://github.com/OpenTOSCA/opentosca-docker/tree/demo/view-plugin). However other set-up, such as the configuration of the environment, still needs to be completed manually.
 
@@ -24,23 +26,39 @@ server:
   port: 8078
 ```
 
-Similarly, pull the [dev-main branch of the workflow-modeler repository](https://github.com/SeQuenC-Consortium/workflow-modeler/tree/dev-main) and execute it according to the given README. Configure the endpoints according to your Winery, OpenTOSCA, and Camunda setup. Make sure to avoid using localhost, as it causes issues with docker setups.
+Similarly, pull the [dev-main branch of the workflow-modeler repository](https://github.com/SeQuenC-Consortium/workflow-modeler/tree/dev-main) and execute it according to the given README. 
 
-In the case you followed our setup, this would mean the following (Replace ${PUBLIC_HOSTNAME}):
+### Docker
 
-  * Winery: Change IP and Port to ${PUBLIC_HOSTNAME}:8079
-  * Camunda: Change IP and Port to ${PUBLIC_HOSTNAME}:8078
-  * OpenTOSCA: Change Port to ${PUBLIC_HOSTNAME}
+A complete docker-compose including changes and containers for both the workflow-modeler is available at the [demo-plugin branch of the opentosca-docker repository](https://github.com/OpenTOSCA/opentosca-docker/tree/demo/view-plugin)
+For this set-up to work, similarly to the manual setup, you have to pull the [dev-main branch of the workflow-modeler repository](https://github.com/SeQuenC-Consortium/workflow-modeler/tree/dev-main) and the [dockerimage branch of the camunda-deployment-view-plugin repository](https://github.com/SeQuenC-Consortium/camunda-deployment-view-plugin/tree/5-dockerimage). Build the dockerfiles by using
 
+```
+docker build -t workflow-modeler:local .
+```
+and 
+```
+docker build -t camunda-deployment-view-plugin:local .
+```
+respectively.
 
-  
+Set up the remainder of the repro as instructed in the README provided with it.
+
 ## Set-Up
 
 ### Winery
 The service-template of the example Python server needs to be set up. For this import the CSAR given as part of the repository into the winery (If this causes issues, retry while enabling override, or just retry multiple times). Open the topology template, and adjust the DockerEngine-Node's properties to work with your machine (Importantly, adjust the Public IP). If there are issues with the deployment artifact of the top node, use the app.py file given as part of this repository and attatch it to the PythonApp Node as a PythonArchiveArtifact.
 
 ### Workflow-Modeler
-Next, inside the workflow-modeler, load the saved workflow provided in this repository. If everything is set up correctly, the service-template you just created should be attached to a service-task and a connector should also be set up.
+Next, inside the workflow-modeler, configure the endpoints according to your Winery, OpenTOSCA, and Camunda setup. Make sure to avoid using localhost, as it causes issues with docker setups.
+
+In the case you followed our setup, this would mean the following (Replace ${PUBLIC_HOSTNAME} using your ip determined when setting up opentosca-docker, or host.docker.internal, depending on your setup):
+
+  * Winery: Change IP and Port to ${PUBLIC_HOSTNAME}:8079
+  * Camunda: Change IP and Port to ${PUBLIC_HOSTNAME}:8078
+  * OpenTOSCA: Change Port to ${PUBLIC_HOSTNAME}
+
+Then, load the saved workflow provided in this repository. If everything is set up correctly, the service-template you just created should be attached to a service-task and a connector should also be set up.
 
 ## Example execution
 
