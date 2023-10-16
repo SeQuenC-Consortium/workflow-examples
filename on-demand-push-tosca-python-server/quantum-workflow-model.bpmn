@@ -34,8 +34,13 @@ return onDemandOutput;</camunda:script>
     </bpmn2:serviceTask>
     <bpmn2:serviceTask id="Activity_1t2h9q0" name="Wait" camunda:type="external" camunda:topic="abdhd">
       <bpmn2:incoming>Flow_1up6jtj</bpmn2:incoming>
+      <bpmn2:outgoing>Flow_0i6nbtm</bpmn2:outgoing>
     </bpmn2:serviceTask>
     <bpmn2:sequenceFlow id="Flow_1il9il5" sourceRef="StartEvent_1" targetRef="Activity_1hpmqte" />
+    <bpmn2:endEvent id="Event_106l5nm">
+      <bpmn2:incoming>Flow_0i6nbtm</bpmn2:incoming>
+    </bpmn2:endEvent>
+    <bpmn2:sequenceFlow id="Flow_0i6nbtm" sourceRef="Activity_1t2h9q0" targetRef="Event_106l5nm" />
   </bpmn2:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="on">
@@ -50,6 +55,9 @@ return onDemandOutput;</camunda:script>
         <dc:Bounds x="850" y="190" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_106l5nm_di" bpmnElement="Event_106l5nm">
+        <dc:Bounds x="1022" y="212" width="36" height="36" />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_1up6jtj_di" bpmnElement="Flow_1up6jtj">
         <di:waypoint x="740" y="230" />
         <di:waypoint x="850" y="230" />
@@ -59,6 +67,10 @@ return onDemandOutput;</camunda:script>
         <di:waypoint x="420" y="130" />
         <di:waypoint x="690" y="130" />
         <di:waypoint x="690" y="190" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0i6nbtm_di" bpmnElement="Flow_0i6nbtm">
+        <di:waypoint x="950" y="230" />
+        <di:waypoint x="1022" y="230" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
