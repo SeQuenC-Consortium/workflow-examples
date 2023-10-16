@@ -5,10 +5,11 @@
 This example implementation is used to show the basic functionality of the implemented on-demand deployment functionality of the workflow modeler, as well as of the deployment-view-plugin for Camunda.
 
 ## Prerequisites
+For the set-up, docker should be available and running.
 
 ### Manually
 
-For the set-up, docker should be available and running. Additionally, both npm (tested with [9.5.1](https://www.npmjs.com/package/npm/v/9.5.1)) and maven (tested with version 3.6.1 and JDK 19) are necessary to build and run applications.
+For the manual set-up both npm (tested with [9.5.1](https://www.npmjs.com/package/npm/v/9.5.1)) and maven (tested with version 3.6.1 and JDK 19) are necessary to build and run applications.
 Both Winery and OpenTOSCA need to be set up and running. Tested with a set-up based on the [opentosca-docker repository](https://github.com/OpenTOSCA/opentosca-docker).
 Make sure no conflicts with ports arise and that port 10123 is forwarded by the dind container. A pre-adjusted docker-compose is available on the [demo/view-plugin branch](https://github.com/OpenTOSCA/opentosca-docker/tree/demo/view-plugin). However other set-up, such as the configuration of the environment, still needs to be completed manually.
 
@@ -31,7 +32,7 @@ Similarly, pull the [dev-main branch of the workflow-modeler repository](https:/
 ### Docker
 
 A complete docker-compose including changes and containers for both the workflow-modeler is available at the [demo-plugin branch of the opentosca-docker repository](https://github.com/OpenTOSCA/opentosca-docker/tree/demo/view-plugin)
-For this set-up to work, similarly to the manual setup, you have to pull the [dev-main branch of the workflow-modeler repository](https://github.com/SeQuenC-Consortium/workflow-modeler/tree/dev-main) and the [dockerimage branch of the camunda-deployment-view-plugin repository](https://github.com/SeQuenC-Consortium/camunda-deployment-view-plugin/tree/5-dockerimage). Build the dockerfiles by using
+For this set-up to work, similarly to the manual setup, you have to clone the [dev-main branch of the workflow-modeler repository](https://github.com/SeQuenC-Consortium/workflow-modeler/tree/dev-main) and the [dockerimage branch of the camunda-deployment-view-plugin repository](https://github.com/SeQuenC-Consortium/camunda-deployment-view-plugin/tree/5-dockerimage). Build the dockerfiles by using
 
 ```
 docker build -t workflow-modeler:local .
@@ -45,6 +46,7 @@ respectively.
 Set up the remainder of the repro as instructed in the README provided with it.
 
 ## Set-Up
+**NOTE: When using services, address them using your local IP determined when setting up opentosca-docker instead of localhost, to avoid issues with connections between components**
 
 ### Winery
 The service-template of the example Python server needs to be set up. For this import the CSAR given as part of the repository into the winery (If this causes issues, retry while enabling override, or just retry multiple times). Open the topology template, and adjust the DockerEngine-Node's properties to work with your machine (Importantly, adjust the Public IP). If there are issues with the deployment artifact of the top node, use the app.py file given as part of this repository and attatch it to the PythonApp Node as a PythonArchiveArtifact.
@@ -52,9 +54,9 @@ The service-template of the example Python server needs to be set up. For this i
 ### Workflow-Modeler
 Next, inside the workflow-modeler, configure the endpoints according to your Winery, OpenTOSCA, and Camunda setup. Make sure to avoid using localhost, as it causes issues with docker setups.
 
-In the case you followed our setup, this would mean the following (Replace ${PUBLIC_HOSTNAME} using your ip determined when setting up opentosca-docker, or host.docker.internal, depending on your setup):
+In the case you followed our setup, this would mean the following (Replace ${PUBLIC_HOSTNAME} using your ip determined when setting up opentosca-docker):
 
-  * Winery: Change IP and Port to ${PUBLIC_HOSTNAME}:8079 (Port change only necessary in manual setup)
+  * Winery: Change IP and Port to ${PUBLIC_HOSTNAME}:8079 (Port change only necessary in  manual setup)
   * Camunda: Change IP and Port to ${PUBLIC_HOSTNAME}:8078
   * OpenTOSCA: Change Port to ${PUBLIC_HOSTNAME}
 
@@ -68,4 +70,4 @@ Create a process in Camunda by selecting *deployment* and choosing *Yes* for on-
 
 ### Camunda
 
-Using Camunda, start the process that was just created. Its name is *on* and it can be started from the task list. When prompted for an input, use *demand*. Using the cockpit, the process can be supervised. Once the deployment using OpenTOSCA is started, you will see a running instance. The subtasks can be seen by expanding the service task using the corresponding button. Once deployment by Tosca is finished, the final task of the subtasks will send the request to the deployed server and log an answer.
+Using Camunda, start the process that was just created. Its name is *on* and it can be started from the task list. When prompted for an input, use *demand*. Once the deployment using OpenTOSCA is started, you will see a running instance. The subtasks can be seen by expanding the service task using the corresponding button. Once deployment by Tosca is finished (can take up to 10 minutes), the final task of the subtasks will send the request to the deployed server and log an answer. At this point, it is possible to check the stat of the deployment using the cockpit, which also includes checking of the subprocesses which were created by the workflow modeller.
