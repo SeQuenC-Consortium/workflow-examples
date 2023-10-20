@@ -35,7 +35,7 @@ A complete docker-compose including changes and containers for both the workflow
 For this set-up to work, similarly to the manual setup, you have to clone the [dev-main branch of the workflow-modeler repository](https://github.com/SeQuenC-Consortium/workflow-modeler/tree/dev-main) and the [dockerimage branch of the camunda-deployment-view-plugin repository](https://github.com/SeQuenC-Consortium/camunda-deployment-view-plugin/tree/5-dockerimage). Build the dockerfiles by using
 
 ```
-docker build -t workflow-modeler:local .
+docker build -t workflow-modeler:local --build-arg CAMUNDA_ENDPOINT='http://${PUBLIC_HOSTNAME}:8078/engine-rest' --build-arg WINERY_ENDPOINT='http://${PUBLIC_HOSTNAME}:8080/winery' --build-arg OPENTOSCA_ENDPOINT='http://${PUBLIC_HOSTNAME}:1337/csars' .
 ```
 and 
 ```
@@ -43,7 +43,9 @@ docker build -t camunda-deployment-view-plugin:local .
 ```
 respectively.
 
-Set up the remainder of the repro as instructed in the README provided with it.
+**build-args are not mandatory and may be configured later in the UI. If using, exchange ${PUBLIC_HOSTNAME} by your public hostname determined as part of the following OpenTOSCA docker setup**
+
+Set up the remainder of the repostory as instructed in the README provided with it.
 
 ## Set-Up
 **NOTE: When using services, address them using your local IP determined when setting up opentosca-docker instead of localhost, to avoid issues with connections between components**
