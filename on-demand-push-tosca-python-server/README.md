@@ -51,7 +51,14 @@ Set up the remainder of the repostory as instructed in the README provided with 
 **NOTE: When using services, address them using your local IP determined when setting up opentosca-docker instead of localhost, to avoid issues with connections between components**
 
 ### Winery
-The service-template of the example Python server needs to be set up. For this import the CSAR given as part of the repository into the winery (If this causes issues, retry while enabling override, or just retry multiple times). Open the topology template, and adjust the DockerEngine-Node's properties to work with your machine (Importantly, adjust the Public IP). If there are issues with the deployment artifact of the top node, use the app.py file given as part of this repository and attatch it to the PythonApp Node as a PythonArchiveArtifact.
+The service-template of the example Python server needs to be set up. 
+For this import the CSAR given as part of the repository into the winery (If this causes issues, retry while enabling override, or just retry multiple times). 
+Open the topology template, and adjust the DockerEngine-Node's properties to work with your machine (Importantly, adjust the Public IP). 
+If there are issues with the deployment artifact of the top node, use the app.py file given as part of this repository and 
+attatch it to the PythonApp Node as a PythonArchiveArtifact.
+Hint: If Camunda is running locally and not inside of the docker compose, edit the example worklofw csar.
+Change host.docker.internal from "targetPropertyRef="concat('http://host.docker.internal:10123', '/post')"/> to your IP.
+
 
 ### Workflow-Modeler
 Next, inside the workflow-modeler, configure the endpoints according to your Winery, OpenTOSCA, and Camunda setup. Make sure to avoid using localhost, as it causes issues with docker setups.
